@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANOVIGYAN QUIZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090a15;
+            --card-bg: #151832;
+            --card-hover: #1e2245;
+            --text-main: #ffffff;
+            --text-muted: #8b92b2;
+            --accent-gold: #f4d068;
+            --accent-pink: #f472b6;
+            --accent-blue: #4d88ff;
+            --accent-purple: #c85aff;
+            --correct-bg: #113322;
+            --correct-border: #22c55e;
+            --wrong-bg: #3b1219;
+            --wrong-border: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Mukta', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Starry Background Effect */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255,255,255,0.08) 1px, transparent 1px),
+                radial-gradient(circle at 85% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 50% 80%, rgba(255,255,255,0.05) 1.5px, transparent 1.5px),
+                radial-gradient(circle at 70% 10%, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 150px 150px;
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / Logo */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brain-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--card-bg), #2a1f4a);
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            box-shadow: 0 0 30px rgba(200, 90, 255, 0.4);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .title .gold { color: var(--accent-gold); text-shadow: 0 0 10px rgba(244, 208, 104, 0.5); }
+        .title .pink { color: var(--accent-pink); text-shadow: 0 0 10px rgba(244, 114, 182, 0.5); }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Home Screen Chapters */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .chapters-grid { grid-template-columns: 1fr; }
+        }
+
+        .chapter-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover);
+        }
+
+        .ch-1 { border-bottom: 3px solid var(--accent-blue); }
+        .ch-2 { border-bottom: 3px solid var(--accent-purple); }
+
+        .ch-title-small {
+            font-size: 12px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .ch-2 .ch-title-small { color: var(--accent-gold); }
+
+        .ch-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        .ch-desc { color: var(--text-muted); font-size: 13px; }
+
+        /* Buttons */
+        .btn-primary {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #6b73ff, #c85aff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(107, 115, 255, 0.3);
+            font-family: 'Mukta', sans-serif;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 15px 25px rgba(200, 90, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Quiz Screen */
+        #quiz-screen, #result-screen {
+            display: none;
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .q-count {
+            color: var(--accent-pink);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .score-live {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .option-btn {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-main);
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Mukta', sans-serif;
+            font-weight: 600;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .option-btn.correct {
+            background: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: #4ade80;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: #f87171;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        #next-btn {
+            display: none;
+            margin-top: 25px;
+        }
+
+        /* Result Screen */
+        .result-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .result-score {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .feedback-text {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .feedback-good { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid #22c55e;}
+        .feedback-avg { background: rgba(244,208,104,0.1); color: #f4d068; border: 1px solid #f4d068;}
+        .feedback-bad { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid #ef4444;}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- HOME SCREEN -->
+    <div id="home-screen">
+        <div class="logo-container">
+            <div class="brain-icon">🧠</div>
+            <div class="title"><span class="gold">મનોવિજ્ઞાન</span> <span class="pink">ક્વિઝ</span></div>
+            <div class="subtitle">10 MCQ • 2 અધ્યાય • Gujarati Medium</div>
+        </div>
+
+        <div class="chapters-grid">
+            <div class="chapter-card ch-1" onclick="startQuiz(1)">
+                <div class="ch-title-small">📘 CHAPTER 1</div>
+                <div class="ch-name">હેતુલક્ષી પ્રશ્નો</div>
+                <div class="ch-desc">4 પ્રશ્નો (Q1-Q4)</div>
+            </div>
+            <div class="chapter-card ch-2" onclick="startQuiz(2)">
+                <div class="ch-title-small">🧪 CHAPTER 2</div>
+                <div class="ch-name">મનોવિજ્ઞાનનો વિકાસ</div>
+                <div class="ch-desc">6 પ્રશ્નો (Q5-Q10)</div>
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="startQuiz('all')">🚀 બધી ક્વિઝ શરૂ કરો</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen">
+        <div class="quiz-header">
+            <div class="q-count">પ્રશ્ન <span id="current-q-num">1</span>/<span id="total-q-count">10</span></div>
+            <div class="score-live">સ્કોર: <span id="live-score">0</span></div>
+        </div>
+        
+        <div id="question-text" class="question-text">Loading...</div>
+        <div id="options-area"></div>
+        
+        <button id="next-btn" class="btn-primary" onclick="nextQuestion()">આગળનો પ્રશ્ન ➔</button>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" style="text-align: center;">
+        <div id="result-emoji" class="result-icon">🎓</div>
+        <div style="color: var(--text-muted); margin-bottom: 5px;">તમારું પરિણામ</div>
+        <div id="final-score" class="result-score">0/10</div>
+        
+        <div id="feedback-msg" class="feedback-text"></div>
+        
+        <button class="btn-primary" onclick="goHome()">🏠 હોમ પેજ પર પાછા ફરો</button>
+    </div>
+
+</div>
+
+<script>
+    // 10 Questions perfectly extracted from your provided chapters 1 & 2
+    const questions = [
+        // Topic 1
+        {
+            chapter: 1,
+            question: "૧. મનોવિજ્ઞાન (સાઈકોલોજી) શબ્દ કઈ ભાષામાંથી ઊતરી આવ્યો છે?",
+            answers: [
+                { text: "(a) સ્પેનિશ", correct: false },
+                { text: "(b) લેટિન", correct: false },
+                { text: "(c) ગ્રીક", correct: true },
+                { text: "(d) ફ્રેન્ચ", correct: false }
+            ]
+        },
+        {
+            chapter: 1,
+            question: "૨. ભારતમાં મનોવિજ્ઞાન ક્ષેત્રમાં સૌપ્રથમ પ્રયોગશાળા ક્યારે સ્થાપવામાં આવી?",
+            answers: [
+                { text: "(a) 1932", correct: false },
+                { text: "(b) 1945", correct: false },
+                { text: "(c) 1906", correct: false },
+                { text: "(d) 1905", correct: true }
+            ]
+        },
+        {
+            chapter: 1,
+            question: "૩. મનોવિજ્ઞાન કયા વિષયમાંથી ઉદ્ભવેલ છે?",
+            answers: [
+                { text: "(a) તર્કશાસ્ત્ર", correct: false },
+                { text: "(b) આંકડાશાસ્ત્ર", correct: false },
+                { text: "(c) તત્ત્વજ્ઞાન", correct: true },
+                { text: "(d) પ્રાણીશાસ્ત્ર", correct: false }
+            ]
+        },
+        {
+            chapter: 1,
+            question: "૪. મનોવિજ્ઞાન માનવીના વર્તનનો અભ્યાસ શાના સંદર્ભમાં કરે છે?",
+            answers: [
+                { text: "(a) રસ", correct: false },
+                { text: "(b) રુચિ", correct: false },
+                { text: "(c) વાતાવરણ", correct: true },
+                { text: "(d) મનોવલણ", correct: false }
+            ]
+        },
+        // Topic 2
+        {
+            chapter: 2,
+            question: "૫. મનોવિજ્ઞાનને વિજ્ઞાન તરીકેનો દરજ્જો ક્યારથી પ્રાપ્ત થયો?",
+            answers: [
+                { text: "(a) 1878", correct: false },
+                { text: "(b) 1879", correct: true },
+                { text: "(c) 1972", correct: false },
+                { text: "(d) 1869", correct: false }
+            ]
+        },
+        {
+            chapter: 2,
+            question: "૬. મનોવિજ્ઞાનનું વિષયવસ્તુ શું છે?",
+            answers: [
+                { text: "(a) માનવી", correct: false },
+                { text: "(b) પ્રાણી", correct: false },
+                { text: "(c) વાતાવરણ", correct: false },
+                { text: "(d) વર્તન", correct: true }
+            ]
+        },
+        {
+            chapter: 2,
+            question: "૭. અચેતન મનનો સિદ્ધાંત કોણે આપ્યો છે?",
+            answers: [
+                { text: "(a) વર્ધીમર", correct: false },
+                { text: "(b) વુન્ટ", correct: false },
+                { text: "(c) ફ્રોઈડ", correct: true },
+                { text: "(d) જ્હોન ડ્યુઈ", correct: false }
+            ]
+        },
+        {
+            chapter: 2,
+            question: "૮. મનોવિજ્ઞાનને પ્રયોગાત્મક સ્વરૂપ આપવાનો યશ કોને ફાળે જાય છે?",
+            answers: [
+                { text: "(a) યુંગ", correct: false },
+                { text: "(b) કોહલર", correct: false },
+                { text: "(c) ફ્રોઈડ", correct: false },
+                { text: "(d) વુન્ટ", correct: true }
+            ]
+        },
+        {
+            chapter: 2,
+            question: "૯. રચનાવાદીઓએ કઈ પદ્ધતિનો ઉપયોગ કર્યો?",
+            answers: [
+                { text: "(a) બાહ્ય નિરીક્ષણ", correct: false },
+                { text: "(b) આંતર નિરીક્ષણ", correct: true },
+                { text: "(c) મુક્ત સાહચર્ય", correct: false },
+                { text: "(d) સ્વપ્ન વિશ્લેષણ", correct: false }
+            ]
+        },
+        {
+            chapter: 2,
+            question: "૧૦. વર્તનવાદના પ્રણેતા કોણ હતા?",
+            answers: [
+                { text: "(a) વોટ્સન", correct: true },
+                { text: "(b) કોહલર", correct: false },
+                { text: "(c) વર્ધીમર", correct: false },
+                { text: "(d) સી.ટી.મોર્ગન", correct: false }
+            ]
+        }
+    ];
+
+    const homeScreen = document.getElementById("home-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const resultScreen = document.getElementById("result-screen");
+    
+    const questionElement = document.getElementById("question-text");
+    const optionsArea = document.getElementById("options-area");
+    const nextBtn = document.getElementById("next-btn");
+    const qNumElement = document.getElementById("current-q-num");
+    const totalQCountElement = document.getElementById("total-q-count");
+    const liveScoreElement = document.getElementById("live-score");
+
+    let currentQuestionsList = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz(type) {
+        if (type === 1) {
+            currentQuestionsList = questions.filter(q => q.chapter === 1);
+        } else if (type === 2) {
+            currentQuestionsList = questions.filter(q => q.chapter === 2);
+        } else {
+            currentQuestionsList = questions; // all
+        }
+
+        homeScreen.style.display = "none";
+        resultScreen.style.display = "none";
+        quizScreen.style.display = "block";
+        
+        currentQuestionIndex = 0;
+        score = 0;
+        liveScoreElement.innerText = score;
+        totalQCountElement.innerText = currentQuestionsList.length;
+        showQuestion();
+    }
+
+    function showQuestion() {
+        resetState();
+        qNumElement.innerText = currentQuestionIndex + 1;
+        let currentQuestion = currentQuestionsList[currentQuestionIndex];
+        questionElement.innerText = currentQuestion.question;
+
+        currentQuestion.answers.forEach(answer => {
+            const button = document.createElement("button");
+            button.innerText = answer.text;
+            button.classList.add("option-btn");
+            if(answer.correct) {
+                button.dataset.correct = answer.correct;
+            }
+            button.addEventListener("click", selectAnswer);
+            optionsArea.appendChild(button);
+        });
+    }
+
+    function resetState() {
+        nextBtn.style.display = "none";
+        while(optionsArea.firstChild) {
+            optionsArea.removeChild(optionsArea.firstChild);
+        }
+    }
+
+    function selectAnswer(e) {
+        const selectedBtn = e.target;
+        const isCorrect = selectedBtn.dataset.correct === "true";
+        
+        if(isCorrect) {
+            selectedBtn.classList.add("correct");
+            score++;
+            liveScoreElement.innerText = score;
+        } else {
+            selectedBtn.classList.add("wrong");
+        }
+        
+        // Show correct answer & disable clicks
+        Array.from(optionsArea.children).forEach(button => {
+            if(button.dataset.correct === "true") {
+                button.classList.add("correct");
+            }
+            button.disabled = true;
+        });
+        
+        nextBtn.style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if(currentQuestionIndex < currentQuestionsList.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        quizScreen.style.display = "none";
+        resultScreen.style.display = "block";
+        
+        const finalScoreText = document.getElementById("final-score");
+        const feedbackMsg = document.getElementById("feedback-msg");
+        const resultEmoji = document.getElementById("result-emoji");
+        
+        finalScoreText.innerText = `${score} / ${currentQuestionsList.length}`;
+        
+        let percentage = (score / currentQuestionsList.length) * 100;
+
+        // Custom Feedback based on Marks
+        feedbackMsg.className = "feedback-text"; // Reset classes
+        
+        if (percentage >= 80) {
+            feedbackMsg.innerHTML = "અદ્ભુત! આ જ રીતે ચાલુ રાખો 🌟<br><small style='font-size:16px;'>(Excellent! Keep it up!)</small>";
+            feedbackMsg.classList.add("feedback-good");
+            resultEmoji.innerText = "🏆";
+        } else if (percentage >= 50) {
+            feedbackMsg.innerHTML = "સારી પ્રગતિ! વધુ મહેનત કરો 👍<br><small style='font-size:16px;'>(Good progress!)</small>";
+            feedbackMsg.classList.add("feedback-avg");
+            resultEmoji.innerText = "👏";
+        } else {
+            feedbackMsg.innerHTML = "નિરાશ ન થશો, ફરી પ્રયાસ કરો 💪<br><small style='font-size:16px;'>(Don't be bad, keep trying!)</small>";
+            feedbackMsg.classList.add("feedback-bad");
+            resultEmoji.innerText = "📚";
+        }
+    }
+
+    function goHome() {
+        resultScreen.style.display = "none";
+        homeScreen.style.display = "block";
+    }
+</script>
+
+</body>
+</ht
