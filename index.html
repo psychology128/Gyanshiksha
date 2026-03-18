@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>જ્ઞાનશિક્ષા - શૈક્ષણિક પોર્ટલ</title>
-    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -50,8 +49,8 @@
         }
 
         /* --- Hero Section --- */
-        /* Changed to Indian students/classroom photo */
-        .hero { position: relative; background-image: url('image_a2e8cd.jpg'); background-size: cover; background-position: center; height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        /* Updated with new background image from user */
+        .hero { position: relative; background-image: url('jaredd-craig-HH4WBGNyltc-unsplash.jpg'); background-size: cover; background-position: center; height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1; }
         .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
         
@@ -171,13 +170,11 @@
 </head>
 <body>
 
-    <!-- Top Info Bar -->
     <div class="top-info">
         <span><i class="fa-solid fa-envelope"></i> janijani431@yahoo.com</span>
         <span>શૈક્ષણિક પોર્ટલ અને સ્પર્ધાત્મક પરીક્ષા પ્લેટફોર્મ</span>
     </div>
 
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="logo" onclick="showScreen('home')">
             <i class="fa-solid fa-graduation-cap"></i> જ્ઞાનશિક્ષા
@@ -192,24 +189,21 @@
         </ul>
     </nav>
 
-    <!-- ================= SCREENS ================= -->
-
-    <!-- 1. HOME SCREEN -->
     <div id="screen-home" class="screen-section active" style="padding: 0; max-width: 100%;">
         <div class="hero">
             <div class="hero-content">
+                <div class="big-counter">
+                    <span>અમારી સાથે જોડાયેલા</span> <span id="hero-counter">૨૯,૧૨,૦૯૩</span> <span>વિદ્યાર્થીઓ</span>
+                </div>
                 <h1>જ્ઞાનશિક્ષા શૈક્ષણિક પોર્ટલ</h1>
                 <p>સ્પર્ધાત્મક પરીક્ષાઓ (TET, TAT) અને શૈક્ષણિક હેતુઓ માટે ખાસ તૈયાર કરેલ ઓનલાઈન ક્વિઝ, શૈક્ષણિક ગેમ્સ અને અભ્યાસ સામગ્રીનું શ્રેષ્ઠ માધ્યમ.</p>
-                <!-- Hero buttons removed as requested -->
-            </div>
+                </div>
         </div>
 
-        <!-- Latest News -->
         <div style="max-width: 1200px; margin: 60px auto; padding: 0 20px;">
             <h2 class="section-title">નવીનતમ સમાચાર (Latest News)</h2>
             <div class="news-grid">
                 
-                <!-- News 1: TAT HS -->
                 <div class="news-card">
                     <img src="1000_F_315952395_4JIWEYrphH93W2vSFOEqF8pyAVdSGZXA.jpg" class="news-img" alt="TAT HS News">
                     <div class="news-content">
@@ -223,7 +217,6 @@
                     </div>
                 </div>
 
-                <!-- News 2: TAT S Notification -->
                 <div class="news-card">
                     <img src="1000_F_291245425_hykHpeTITwonlC1wHrGvjZO8ZmYMJQ3r.jpg" class="news-img" alt="TAT S Notification">
                     <div class="news-content">
@@ -237,7 +230,6 @@
                     </div>
                 </div>
 
-                <!-- News 3: General Updates -->
                 <div class="news-card">
                     <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=800&auto=format&fit=crop" class="news-img" alt="Education News">
                     <div class="news-content">
@@ -255,15 +247,12 @@
         </div>
     </div>
 
-    <!-- 2. TEST SCREEN -->
     <div id="screen-test" class="screen-section">
         <h2 class="section-title">ઓનલાઈન ટેસ્ટ અને ક્વિઝ</h2>
 
-        <!-- Exam Specific Mock Tests -->
         <h3 style="margin-bottom: 20px; color: var(--secondary-color); font-size: 24px;">સ્પર્ધાત્મક પરીક્ષા (Mock Tests)</h3>
         <div class="test-grid">
             
-            <!-- TAT-S Card -->
             <div class="test-card">
                 <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800&auto=format&fit=crop" alt="TAT-S Test" class="test-img">
                 <div class="test-card-content">
@@ -271,7 +260,6 @@
                     <p style="color: var(--text-muted); font-size: 15px;">ધોરણ ૯ અને ૧૦ ના શિક્ષકો માટેની પરીક્ષાની સંપૂર્ણ તૈયારી અને ટેસ્ટ સિરીઝ.</p>
                     
                     <div class="test-tags-row">
-                        <!-- લીલા કલરનું ક્લિકેબલ બટન -->
                         <button class="tag-btn free" onclick="startPsychQuiz(1)">ફ્રી ટેસ્ટ (પ્રકરણ ૧)</button>
                         <span class="tag-badge mock">મોક ટેસ્ટ</span>
                         <span class="tag-badge paid">પેઇડ ટેસ્ટ</span>
@@ -283,15 +271,13 @@
                 </div>
             </div>
 
-            <!-- TAT-HS Card -->
             <div class="test-card">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop" alt="TAT-HS Test" class="test-img">
+                <img src="https://images.unsplash.com/photo-1510531704581-5b2870972060?q=80&w=800&auto=format&fit=crop" alt="TAT-HS Test" class="test-img">
                 <div class="test-card-content">
                     <h4>TAT-HS (ઉચ્ચતર માધ્યમિક શિક્ષક)</h4>
                     <p style="color: var(--text-muted); font-size: 15px;">ધોરણ ૧૧ અને ૧૨ ના શિક્ષકો માટેની પરીક્ષાની સંપૂર્ણ તૈયારી અને ટેસ્ટ સિરીઝ.</p>
                     
                     <div class="test-tags-row">
-                        <!-- લીલા કલરનું ક્લિકેબલ બટન -->
                         <button class="tag-btn free" onclick="startPsychQuiz(2)">ફ્રી ટેસ્ટ (પ્રકરણ ૨)</button>
                         <span class="tag-badge mock">મોક ટેસ્ટ</span>
                         <span class="tag-badge paid">પેઇડ ટેસ્ટ</span>
@@ -306,7 +292,6 @@
         </div>
     </div>
 
-    <!-- 3. BLOG SCREEN (Under Construction) -->
     <div id="screen-blog" class="screen-section">
         <div class="construction-box">
             <i class="fa-solid fa-blog"></i>
@@ -316,7 +301,6 @@
         </div>
     </div>
 
-    <!-- 4. ABOUT SCREEN -->
     <div id="screen-about" class="screen-section">
         <h2 class="section-title">અમારા વિશે (About Us)</h2>
         <div class="about-content">
@@ -332,7 +316,6 @@
         </div>
     </div>
 
-    <!-- 5. CONTACT SCREEN -->
     <div id="screen-contact" class="screen-section">
         <h2 class="section-title">સંપર્ક કરો (Contact)</h2>
         <div style="display: flex; flex-wrap: wrap; gap: 40px; background: var(--bg-white); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
@@ -348,7 +331,6 @@
         </div>
     </div>
 
-    <!-- 6. EDUCATIONAL GAMES SCREEN -->
     <div id="screen-games" class="screen-section">
         <h2 class="section-title">શૈક્ષણિક ગેમ્સ (ગણિત)</h2>
         <p style="text-align: center; margin-top: -20px; margin-bottom: 40px; color: var(--text-muted); font-size: 18px;">વય જૂથ: ૬ થી ૧૬ વર્ષના બાળકો માટે</p>
@@ -372,7 +354,6 @@
             </div>
         </div>
 
-        <!-- Math Quiz UI -->
         <div id="math-quiz-area">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
                 <button class="btn btn-outline" style="border-color: var(--border-color); color: var(--text-dark); padding: 5px 15px;" onclick="closeMathGame()">
@@ -394,7 +375,6 @@
             </div>
         </div>
         
-        <!-- Math Result -->
         <div id="math-result-area" style="display: none; background: var(--bg-white); padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 600px; margin: 0 auto;">
             <i class="fa-solid fa-trophy" style="font-size: 60px; color: var(--primary-color); margin-bottom: 20px;"></i>
             <h2 style="font-size: 32px; margin-bottom: 10px;">રમત પૂર્ણ!</h2>
@@ -403,7 +383,6 @@
         </div>
     </div>
 
-    <!-- 7. PSYCHOLOGY Quiz SCREEN (Hidden inside code, activated via Test buttons) -->
     <div id="screen-psych-quiz" class="screen-section">
         <div id="psych-quiz-area">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
@@ -436,10 +415,8 @@
     </div>
 
 
-    <!-- ================= FOOTER ================= -->
     <footer class="footer">
         <div class="footer-grid">
-            <!-- Col 1: Details -->
             <div class="footer-col">
                 <div class="logo" style="color: #fff; margin-bottom: 20px;">
                     <i class="fa-solid fa-graduation-cap" style="color: var(--primary-color);"></i> જ્ઞાનશિક્ષા
@@ -454,7 +431,6 @@
                 </div>
             </div>
 
-            <!-- Col 2: Useful Links -->
             <div class="footer-col">
                 <h3>ઉપયોગી લિંક્સ (User Links)</h3>
                 <ul class="footer-links">
@@ -467,7 +443,6 @@
                 </ul>
             </div>
 
-            <!-- Col 3: Suggestion / Contact Form -->
             <div class="footer-col quick-contact">
                 <h3>સજેશન બોક્સ (Quick Contact)</h3>
                 <form id="suggestionForm" action="https://formspree.io/f/xnjgoeod" method="POST">
@@ -494,7 +469,6 @@
         </div>
     </footer>
 
-<!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
     // --- 0. Visitor Counter (Admin Exclude Logic) ---
     const urlParams = new URLSearchParams(window.location.search);
