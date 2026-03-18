@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>મનોવિજ્ઞાન - શૈક્ષણિક પોર્ટલ</title>
+    <title>જ્ઞાનશિક્ષા - શૈક્ષણિક પોર્ટલ</title>
+    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --bg-body: #f4f7f6;
             --bg-white: #ffffff;
             --text-dark: #2d3436;
             --text-muted: #636e72;
-            --primary-color: #f39c12; /* Orange-Yellow from screenshot */
+            --primary-color: #f39c12; /* Yellow/Orange */
             --primary-hover: #e67e22;
-            --secondary-color: #2980b9;
+            --secondary-color: #2980b9; /* Blue */
             --border-color: #dfe6e9;
+            --footer-bg: #222222;
             --correct-bg: #e3fbed;
             --correct-border: #27ae60;
             --correct-text: #219653;
@@ -25,567 +29,754 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mukta', sans-serif; }
 
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+        body { background-color: var(--bg-body); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        /* --- Top Navigation Bar --- */
-        .navbar {
-            background-color: var(--bg-white);
-            padding: 15px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        /* --- Navbar --- */
+        .top-info { background: #f8f9fa; padding: 5px 50px; display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
+        .top-info span { display: flex; align-items: center; gap: 8px; }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-        .logo svg { width: 32px; height: 32px; fill: var(--primary-color); }
+        .navbar { background-color: var(--bg-white); padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 800; color: var(--text-dark); cursor: pointer; text-transform: uppercase; }
+        .logo i { color: var(--secondary-color); font-size: 28px; }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-        .nav-links li {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-        .nav-links li:hover { color: var(--primary-color); }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links li { font-size: 16px; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: color 0.3s; padding: 5px 0; }
+        .nav-links li:hover, .nav-links li.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .navbar { padding: 15px 20px; flex-direction: column; gap: 15px; }
-            .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .top-info { display: none; }
         }
 
         /* --- Hero Section --- */
-        .hero {
-            position: relative;
-            background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop'); /* Teacher/Education Background */
-            background-size: cover;
-            background-position: center;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-        }
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Dark Overlay */
-            z-index: 1;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-        .hero h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .hero p {
-            font-size: 18px;
-            font-weight: 400;
-            margin-bottom: 30px;
-            line-height: 1.6;
-            color: #f1f2f6;
-        }
-        .hero-btns {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Buttons matching screenshot */
-        .btn {
-            padding: 14px 30px;
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .btn-yellow {
-            background-color: var(--primary-color);
-            color: white;
-            border: 2px solid var(--primary-color);
-        }
-        .btn-yellow:hover {
-            background-color: transparent;
-            color: var(--primary-color);
-        }
-        .btn-outline {
-            background-color: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-        .btn-outline:hover {
-            background-color: white;
-            color: var(--text-dark);
-        }
-
-        /* --- Main Container Area --- */
-        .main-container {
-            flex: 1;
-            width: 100%;
-            max-width: 800px;
-            margin: -40px auto 40px auto;
-            position: relative;
-            z-index: 10;
-            padding: 0 20px;
-        }
-
-        /* Screens (Quiz, Result, Suggestion) */
-        .screen-card {
-            background: var(--bg-white);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            display: none; /* Hidden by default */
-        }
-        #home-content { display: block; } /* Home is visible by default */
-
-        /* --- Chapters Area (Moved below hero) --- */
-        .chapters-section {
-            margin-top: 20px;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* --- Quiz Screen --- */
-        .quiz-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .score-live {
-            background: var(--bg-body);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-        }
-        .q-count { color: var(--primary-color); font-weight: 700; font-size: 18px; }
+        /* Changed to Indian students/classroom photo */
+        .hero { position: relative; background-image: url('image_a2e8cd.jpg'); background-size: cover; background-position: center; height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
         
-        .question-text {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            color: var(--text-dark);
-        }
+        .big-counter { font-size: 48px; font-weight: 800; color: var(--primary-color); font-family: 'Montserrat', sans-serif; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: baseline; gap: 10px; }
+        .big-counter span { font-size: 24px; color: #fff; font-weight: 400; font-family: 'Mukta', sans-serif; }
+        
+        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 42px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { font-size: 18px; font-weight: 400; margin-bottom: 30px; line-height: 1.6; color: #e0e0e0; }
 
-        .option-btn {
-            width: 100%;
-            background: var(--bg-white);
-            border: 2px solid var(--border-color);
-            color: var(--text-dark);
-            padding: 16px 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            font-size: 18px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-        }
-        .option-btn:hover:not(:disabled) {
-            border-color: var(--secondary-color);
-            background-color: #f0f8ff;
-            transform: translateX(5px);
-        }
-        .option-btn.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
-        .option-btn.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
-        .option-btn:disabled { cursor: not-allowed; opacity: 0.9; }
+        .btn { padding: 14px 30px; font-size: 16px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; text-decoration: none; border: none; }
+        .btn-yellow { background-color: var(--primary-color); color: white; border: 2px solid var(--primary-color); }
+        .btn-yellow:hover { background-color: transparent; color: var(--primary-color); }
+        .btn-outline { background-color: transparent; color: white; border: 2px solid white; }
+        .btn-outline:hover { background-color: white; color: var(--text-dark); }
+        .btn-blue { background-color: var(--secondary-color); color: white; border: 2px solid var(--secondary-color); }
+        .btn-blue:hover { background-color: transparent; color: var(--secondary-color); }
 
-        .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 15px; }
-        .nav-btn {
-            flex: 1; padding: 14px; border-radius: 8px; border: none; font-size: 16px; font-weight: bold;
-            cursor: pointer; transition: 0.3s; color: white; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        #prev-btn { background: #95a5a6; display: none; }
-        #prev-btn:hover { background: #7f8c8d; }
-        #next-btn { background: var(--secondary-color); display: none; }
-        #next-btn:hover { background: #21618c; }
+        /* --- Sections Management --- */
+        .screen-section { display: none; padding: 60px 20px; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; }
+        .screen-section.active { display: block; }
+        .section-title { text-align: center; font-size: 32px; font-weight: 800; color: var(--text-dark); margin-bottom: 40px; text-transform: uppercase; }
+        .section-title::after { content: ""; display: block; width: 80px; height: 3px; background: var(--primary-color); margin: 10px auto 0; }
 
-        /* --- Result Screen --- */
-        .result-icon { font-size: 60px; margin-bottom: 15px; display: flex; justify-content: center; }
-        .result-score { font-family: 'Montserrat', sans-serif; font-size: 45px; font-weight: 800; margin-bottom: 10px; color: var(--secondary-color); }
-        .feedback-text { font-size: 20px; font-weight: 700; margin-bottom: 30px; padding: 20px; border-radius: 8px; line-height: 1.4; }
-        .feedback-good { background: var(--correct-bg); color: var(--correct-text); border: 1px solid var(--correct-border);}
-        .feedback-avg { background: #fff8e1; color: #f39c12; border: 1px solid #f39c12;}
-        .feedback-bad { background: var(--wrong-bg); color: var(--wrong-text); border: 1px solid var(--wrong-border);}
+        /* --- Latest News (Home) --- */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .news-card { background: var(--bg-white); border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--primary-color); }
+        .news-img { width: 100%; height: 200px; object-fit: cover; }
+        .news-content { padding: 25px; flex: 1; display: flex; flex-direction: column; }
+        .news-text h4 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4; }
+        .news-text p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; flex: 1; }
+        .news-link-btn { align-self: flex-start; background: #eef2f3; color: var(--secondary-color); padding: 8px 15px; border-radius: 4px; font-weight: bold; text-decoration: none; border: 1px solid var(--border-color); transition: 0.3s; }
+        .news-link-btn:hover { background: var(--secondary-color); color: white; }
 
-        /* --- Suggestion Box --- */
-        .suggestion-box {
-            margin-top: 40px; background: var(--bg-white); padding: 35px;
-            border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .suggestion-box h3 { font-size: 22px; color: var(--text-dark); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; display: inline-flex;}
-        .form-group { margin-bottom: 20px; }
-        .form-control {
-            width: 100%; padding: 15px; border-radius: 8px; background: var(--bg-body);
-            border: 1px solid var(--border-color); color: var(--text-dark); font-size: 16px;
-        }
-        .form-control:focus { outline: none; border-color: var(--secondary-color); background: var(--bg-white); }
-        textarea.form-control { height: 120px; resize: vertical; }
-        .submit-btn {
-            background: var(--primary-color); color: white; border: none; padding: 15px 25px;
-            border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-size: 18px; display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        .submit-btn:hover { background: var(--primary-hover); }
-        #form-success-msg { display: none; color: var(--correct-text); background: var(--correct-bg); padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: 600; border: 1px solid var(--correct-border); }
+        /* --- Test Screen --- */
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
+        .test-card { background: var(--bg-white); border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid var(--border-color); }
+        .test-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--secondary-color); }
+        .test-img { width: 100%; height: 180px; object-fit: cover; }
+        .test-card-content { padding: 25px; }
+        .test-card-content h4 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+        
+        /* Updated Tags for Test Page */
+        .test-tags-row { display: flex; gap: 10px; margin: 15px 0 20px 0; align-items: center; flex-wrap: wrap;}
+        .tag-btn { padding: 6px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; background: transparent; }
+        .tag-btn.free { border: 2px solid var(--correct-border); color: var(--correct-border); }
+        .tag-btn.free:hover { background: var(--correct-border); color: white; }
+        .tag-badge { padding: 6px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; background: transparent; border: 2px solid; cursor: default; }
+        .tag-badge.mock { border-color: #f39c12; color: #f39c12; }
+        .tag-badge.paid { border-color: #e74c3c; color: #e74c3c; }
+        
+        .btn-lock { width: 100%; background: #f8f9fa; border: 1px solid #dfe6e9; color: #2d3436; font-weight: bold; padding: 12px; border-radius: 4px; cursor: not-allowed; text-align: center; font-size: 15px; transition: 0.2s;}
+        .btn-lock:hover { background: #e9ecef; }
+        .btn-lock i { color: #e74c3c; margin-right: 5px; }
 
+        /* --- Construction Screen (Blog) --- */
+        .construction-box { text-align: center; padding: 80px 20px; background: var(--bg-white); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .construction-box i { font-size: 80px; color: var(--primary-color); margin-bottom: 20px; }
+        .construction-box h2 { font-size: 28px; margin-bottom: 10px; }
+
+        /* --- About Screen --- */
+        .about-content { background: var(--bg-white); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); line-height: 1.8; font-size: 18px; }
+        .about-content p { margin-bottom: 20px; }
+        .about-content ul { margin-left: 20px; margin-bottom: 20px; }
+
+        /* --- Educational Games (Maths) --- */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .game-card { background: var(--bg-white); padding: 30px; text-align: center; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .game-card:hover { border-color: var(--secondary-color); transform: translateY(-5px); }
+        .game-card i { font-size: 40px; color: var(--secondary-color); margin-bottom: 15px; }
+        .game-card h3 { font-size: 22px; font-weight: 700; }
+
+        #math-quiz-area { background: var(--bg-white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: none; max-width: 800px; margin: 0 auto; }
+        .math-q-text { font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 30px; color: var(--secondary-color); letter-spacing: 2px;}
+        .math-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        @media(max-width:500px){ .math-options{grid-template-columns: 1fr;} }
+        .math-opt-btn { padding: 15px; font-size: 20px; font-weight: bold; background: var(--bg-body); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .math-opt-btn:hover:not(:disabled) { border-color: var(--secondary-color); background: #ebf5fb; }
+        .math-opt-btn.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
+        .math-opt-btn.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
+        
+        .reason-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin-bottom: 25px; border-radius: 4px; display: none; font-size: 18px; color: #856404; }
+        .math-score-board { text-align: center; font-size: 20px; font-weight: bold; margin-bottom: 20px; color: var(--text-muted); }
+
+        /* --- Psychology Quiz Area --- */
+        #psych-quiz-area { background: var(--bg-white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: none; max-width: 800px; margin: 0 auto; }
+        
         /* --- Footer --- */
-        footer {
-            background: var(--text-dark); color: white; padding: 30px; text-align: center; margin-top: auto;
-        }
-        .visitor-counter { margin-top: 15px; display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px; font-size: 14px;}
-        .visitor-counter img { height: 20px; border-radius: 4px; }
+        .footer { background-color: var(--footer-bg); color: #ccc; padding: 60px 20px 20px; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        
+        .footer-col h3 { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+        .footer-col h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 40px; height: 2px; background: var(--primary-color); }
+        
+        .footer-contact p { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px; font-size: 15px; }
+        .footer-contact i { color: var(--primary-color); margin-top: 4px; }
+        
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #aaa; text-decoration: none; transition: 0.3s; cursor: pointer;}
+        .footer-links a:hover { color: var(--primary-color); padding-left: 5px; }
 
-        /* Utility SVG Icon styling */
-        .svg-icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        /* Footer Formspree Suggestion Box */
+        .quick-contact .form-control { width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; }
+        .quick-contact .form-control:focus { outline: none; border-color: var(--primary-color); }
+        .quick-contact textarea { height: 80px; resize: vertical; }
+        .quick-contact .btn-submit { background: var(--secondary-color); color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        .quick-contact .btn-submit:hover { background: #1a5276; }
+        #form-success-msg { display: none; color: #2ecc71; margin-top: 10px; font-size: 14px; font-weight: bold; }
+
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 15px; font-size: 14px; }
+        .social-icons { display: flex; gap: 15px; }
+        .social-icons a { color: #aaa; font-size: 18px; transition: 0.3s; }
+        .social-icons a:hover { color: #fff; }
+        .visitor-badge { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; }
     </style>
 </head>
 <body>
 
-    <!-- Top Navbar -->
+    <!-- Top Info Bar -->
+    <div class="top-info">
+        <span><i class="fa-solid fa-envelope"></i> janijani431@yahoo.com</span>
+        <span>શૈક્ષણિક પોર્ટલ અને સ્પર્ધાત્મક પરીક્ષા પ્લેટફોર્મ</span>
+    </div>
+
+    <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="logo" onclick="goHome()">
-            <!-- SVG Education Hat Logo -->
-            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            મનોવિજ્ઞાન
+        <div class="logo" onclick="showScreen('home')">
+            <i class="fa-solid fa-graduation-cap"></i> જ્ઞાનશિક્ષા
         </div>
         <ul class="nav-links">
-            <li onclick="goHome()">હોમ</li>
-            <li onclick="document.getElementById('suggestion-section').scrollIntoView({behavior: 'smooth'})">સંપર્ક</li>
+            <li class="nav-item active" onclick="showScreen('home')">હોમ</li>
+            <li class="nav-item" onclick="showScreen('test')">ટેસ્ટ</li>
+            <li class="nav-item" onclick="showScreen('blog')">બ્લોગ</li>
+            <li class="nav-item" onclick="showScreen('games')">શૈક્ષણિક ગેમ્સ</li>
+            <li class="nav-item" onclick="showScreen('about')">અમારા વિશે</li>
+            <li class="nav-item" onclick="showScreen('contact')">સંપર્ક</li>
         </ul>
     </nav>
 
-    <!-- Hero Section (Visible only on Home) -->
-    <div id="hero-section" class="hero">
-        <div class="hero-content">
-            <h1>મનોવિજ્ઞાન ક્વિઝ પોર્ટલ</h1>
-            <p>સ્વાગત છે! સ્પર્ધાત્મક પરીક્ષાઓ અને શૈક્ષણિક હેતુઓ માટે ખાસ તૈયાર કરેલ મનોવિજ્ઞાનના વિવિધ પ્રકરણોની ઓનલાઈન ક્વિઝ આપીને તમારું જ્ઞાન ચકાસો.</p>
-            <div class="hero-btns">
-                <button class="btn btn-yellow" onclick="startQuiz(1)">
-                    પ્રકરણ ૧ ની ક્વિઝ 
-                    <svg class="svg-icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-                <button class="btn btn-outline" onclick="startQuiz(2)">
-                    પ્રકરણ ૨ ની ક્વિઝ
-                    <svg class="svg-icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
+    <!-- ================= SCREENS ================= -->
+
+    <!-- 1. HOME SCREEN -->
+    <div id="screen-home" class="screen-section active" style="padding: 0; max-width: 100%;">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>જ્ઞાનશિક્ષા શૈક્ષણિક પોર્ટલ</h1>
+                <p>સ્પર્ધાત્મક પરીક્ષાઓ (TET, TAT) અને શૈક્ષણિક હેતુઓ માટે ખાસ તૈયાર કરેલ ઓનલાઈન ક્વિઝ, શૈક્ષણિક ગેમ્સ અને અભ્યાસ સામગ્રીનું શ્રેષ્ઠ માધ્યમ.</p>
+                <!-- Hero buttons removed as requested -->
+            </div>
+        </div>
+
+        <!-- Latest News -->
+        <div style="max-width: 1200px; margin: 60px auto; padding: 0 20px;">
+            <h2 class="section-title">નવીનતમ સમાચાર (Latest News)</h2>
+            <div class="news-grid">
+                
+                <!-- News 1: TAT HS -->
+                <div class="news-card">
+                    <img src="1000_F_315952395_4JIWEYrphH93W2vSFOEqF8pyAVdSGZXA.jpg" class="news-img" alt="TAT HS News">
+                    <div class="news-content">
+                        <div class="news-text">
+                            <h4>TAT-HS 2026 પરીક્ષાની તારીખોમાં ફેરફાર અંગે</h4>
+                            <p>રાજ્ય પરીક્ષા બોર્ડ દ્વારા ઉચ્ચતર માધ્યમિક શિક્ષક યોગ્યતા કસોટી (TAT-HS) 2026 ની લેખિત પરીક્ષાની તારીખોમાં ફેરફાર કરવામાં આવ્યો છે. ઉમેદવારોએ નવો કાર્યક્રમ સત્તાવાર પત્રમાં જોવો.</p>
+                        </div>
+                        <a href="https://www.sebexam.org/AdvertiseFiles/2026/tat%20hs%202026%20date%20change%20letter_032026.pdf" target="_blank" class="news-link-btn">
+                            <i class="fa-solid fa-download"></i> સત્તાવાર પત્ર ડાઉનલોડ કરો
+                        </a>
+                    </div>
+                </div>
+
+                <!-- News 2: TAT S Notification -->
+                <div class="news-card">
+                    <img src="1000_F_291245425_hykHpeTITwonlC1wHrGvjZO8ZmYMJQ3r.jpg" class="news-img" alt="TAT S Notification">
+                    <div class="news-content">
+                        <div class="news-text">
+                            <h4>TAT-S 2026 સત્તાવાર જાહેરનામું (Notification)</h4>
+                            <p>માધ્યમિક શાળાઓમાં શિક્ષક બનવા માંગતા ઉમેદવારો માટે TAT-S 2026 ની સત્તાવાર નોટિફિકેશન બહાર પાડવામાં આવી છે. ઓનલાઇન ફોર્મ ભરવાની તારીખો અને અન્ય માહિતી માટે જાહેરનામું વાંચો.</p>
+                        </div>
+                        <a href="https://www.sebexam.org/AdvertiseFiles/2026/tat%20-%20s%202026%20notification_022026.pdf" target="_blank" class="news-link-btn">
+                            <i class="fa-solid fa-file-pdf"></i> જાહેરનામું વાંચો
+                        </a>
+                    </div>
+                </div>
+
+                <!-- News 3: General Updates -->
+                <div class="news-card">
+                    <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=800&auto=format&fit=crop" class="news-img" alt="Education News">
+                    <div class="news-content">
+                        <div class="news-text">
+                            <h4>શૈક્ષણિક પોર્ટલ પર નવી ટેસ્ટ સિરીઝ </h4>
+                            <p>આપણા પોર્ટલ પર ટૂંક સમયમાં જ TAT-S અને TAT-HS માટે મનોવિજ્ઞાન, સામાન્ય જ્ઞાન અને ભાષાની ફ્રી મોક ટેસ્ટ શરૂ કરવામાં આવી રહી છે. જોડાયેલા રહો.</p>
+                        </div>
+                        <a onclick="showScreen('test')" class="news-link-btn" style="cursor: pointer;">
+                            <i class="fa-solid fa-arrow-right"></i> ટેસ્ટ પેજ જુઓ
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="main-container">
-        
-        <!-- HOME CONTENT (Below Hero) -->
-        <div id="home-content">
-            <!-- Suggestion Box (Contact) -->
-            <div id="suggestion-section" class="suggestion-box">
-                <h3>
-                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    તમારો અભિપ્રાય / સૂચન
-                </h3>
-                <form id="suggestionForm" action="https://formspree.io/f/xnjgoeod" method="POST">
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="તમારું નામ (Your Name)" required>
+    <!-- 2. TEST SCREEN -->
+    <div id="screen-test" class="screen-section">
+        <h2 class="section-title">ઓનલાઈન ટેસ્ટ અને ક્વિઝ</h2>
+
+        <!-- Exam Specific Mock Tests -->
+        <h3 style="margin-bottom: 20px; color: var(--secondary-color); font-size: 24px;">સ્પર્ધાત્મક પરીક્ષા (Mock Tests)</h3>
+        <div class="test-grid">
+            
+            <!-- TAT-S Card -->
+            <div class="test-card">
+                <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a09dce?q=80&w=800&auto=format&fit=crop" alt="TAT-S Test" class="test-img">
+                <div class="test-card-content">
+                    <h4>TAT-S (માધ્યમિક શિક્ષક)</h4>
+                    <p style="color: var(--text-muted); font-size: 15px;">ધોરણ ૯ અને ૧૦ ના શિક્ષકો માટેની પરીક્ષાની સંપૂર્ણ તૈયારી અને ટેસ્ટ સિરીઝ.</p>
+                    
+                    <div class="test-tags-row">
+                        <!-- લીલા કલરનું ક્લિકેબલ બટન -->
+                        <button class="tag-btn free" onclick="startPsychQuiz(1)">ફ્રી ટેસ્ટ (પ્રકરણ ૧)</button>
+                        <span class="tag-badge mock">મોક ટેસ્ટ</span>
+                        <span class="tag-badge paid">પેઇડ ટેસ્ટ</span>
                     </div>
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" placeholder="તમારો સંદેશ કે પ્રશ્ન અહી લખો... (Your message...)" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtnText">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                        સંદેશ મોકલો
+                    
+                    <button class="btn-lock" onclick="alert('આ ટેસ્ટ પર કામ ચાલી રહ્યું છે. ટૂંક સમયમાં ઉપલબ્ધ થશે.')">
+                        <i class="fa-solid fa-lock"></i> ટેસ્ટ શરૂ કરો (COMING SOON)
                     </button>
-                </form>
-                <div id="form-success-msg">તમારો સંદેશ સફળતાપૂર્વક મોકલવામાં આવ્યો છે! આભાર.</div>
+                </div>
+            </div>
+
+            <!-- TAT-HS Card -->
+            <div class="test-card">
+                <img src="https://images.unsplash.com/photo-1510531704581-5b2870972060?q=80&w=800&auto=format&fit=crop" alt="TAT-HS Test" class="test-img">
+                <div class="test-card-content">
+                    <h4>TAT-HS (ઉચ્ચતર માધ્યમિક શિક્ષક)</h4>
+                    <p style="color: var(--text-muted); font-size: 15px;">ધોરણ ૧૧ અને ૧૨ ના શિક્ષકો માટેની પરીક્ષાની સંપૂર્ણ તૈયારી અને ટેસ્ટ સિરીઝ.</p>
+                    
+                    <div class="test-tags-row">
+                        <!-- લીલા કલરનું ક્લિકેબલ બટન -->
+                        <button class="tag-btn free" onclick="startPsychQuiz(2)">ફ્રી ટેસ્ટ (પ્રકરણ ૨)</button>
+                        <span class="tag-badge mock">મોક ટેસ્ટ</span>
+                        <span class="tag-badge paid">પેઇડ ટેસ્ટ</span>
+                    </div>
+                    
+                    <button class="btn-lock" onclick="alert('આ ટેસ્ટ પર કામ ચાલી રહ્યું છે. ટૂંક સમયમાં ઉપલબ્ધ થશે.')">
+                        <i class="fa-solid fa-lock"></i> ટેસ્ટ શરૂ કરો (COMING SOON)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. BLOG SCREEN (Under Construction) -->
+    <div id="screen-blog" class="screen-section">
+        <div class="construction-box">
+            <i class="fa-solid fa-blog"></i>
+            <h2>બ્લોગ પેજ બની રહ્યું છે...</h2>
+            <p style="color: var(--text-muted); font-size: 18px;">શૈક્ષણિક લેખો, મનોવિજ્ઞાનના તથ્યો અને માહિતી સભર બ્લોગ પોસ્ટ્સ ટૂંક સમયમાં મુકવામાં આવશે.</p>
+            <button class="btn btn-blue" style="margin-top: 20px;" onclick="showScreen('home')">હોમ પેજ પર જાવ</button>
+        </div>
+    </div>
+
+    <!-- 4. ABOUT SCREEN -->
+    <div id="screen-about" class="screen-section">
+        <h2 class="section-title">અમારા વિશે (About Us)</h2>
+        <div class="about-content">
+            <p><strong>નમસ્કાર વિદ્યાર્થી મિત્રો,</strong></p>
+            <p><strong>જ્ઞાનશિક્ષા</strong> વેબસાઇટ ખાસ કરીને વિદ્યાર્થીઓના જ્ઞાનમાં વધારો કરવા, સ્પર્ધાત્મક પરીક્ષાઓની (જેવી કે TAT-S, TAT-HS, TET વિગેરે) તૈયારી કરવા અને મનોવિજ્ઞાન તથા ગણિત જેવા વિષયોને સરળતાથી સમજવા માટે બનાવવામાં આવી છે.</p>
+            <p><strong>અમારો ઉદ્દેશ્ય:</strong></p>
+            <ul>
+                <li>માતૃભાષા ગુજરાતીમાં ઉચ્ચ કક્ષાનું શૈક્ષણિક સાહિત્ય પૂરું પાડવું.</li>
+                <li>બાળકો માટે શૈક્ષણિક ગેમ્સ દ્વારા ગણિતના પાયાના ખ્યાલો (સરવાળા, બાદબાકી) મજબૂત કરવા.</li>
+                <li>સ્પર્ધાત્મક પરીક્ષાઓ માટે ફ્રી અને પેઇડ મોક ટેસ્ટનું શ્રેષ્ઠ માધ્યમ બનવું.</li>
+            </ul>
+            <p>અમે સતત નવા પ્રશ્નો અને નવી ગેમ્સ ઉમેરી રહ્યા છીએ જેથી તમારો અભ્યાસ રોમાંચક બની રહે. તમારા સૂચનો આવકાર્ય છે.</p>
+        </div>
+    </div>
+
+    <!-- 5. CONTACT SCREEN -->
+    <div id="screen-contact" class="screen-section">
+        <h2 class="section-title">સંપર્ક કરો (Contact)</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; background: var(--bg-white); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 22px; margin-bottom: 20px; color: var(--secondary-color);">અમારો સંપર્ક વિગત</h3>
+                <p style="font-size: 18px; margin-bottom: 15px;"><i class="fa-solid fa-envelope" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>ઈમેલ:</strong> janijani431@yahoo.com</p>
+                <p style="font-size: 18px; margin-bottom: 15px;"><i class="fa-solid fa-location-dot" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>સરનામું:</strong> ગુજરાત, ભારત</p>
+                <p style="color: var(--text-muted); margin-top: 20px;">કોઈપણ શૈક્ષણિક પ્રશ્ન, ક્વિઝમાં ભૂલ કે નવા સૂચન માટે તમે અમને ઈમેલ કરી શકો છો અથવા નીચે ફૂટરમાં આપેલ 'સજેશન બોક્સ' નો ઉપયોગ કરી શકો છો.</p>
+            </div>
+            <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center;">
+                <i class="fa-solid fa-headset" style="font-size: 150px; color: #eef2f3;"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. EDUCATIONAL GAMES SCREEN -->
+    <div id="screen-games" class="screen-section">
+        <h2 class="section-title">શૈક્ષણિક ગેમ્સ (ગણિત)</h2>
+        <p style="text-align: center; margin-top: -20px; margin-bottom: 40px; color: var(--text-muted); font-size: 18px;">વય જૂથ: ૬ થી ૧૬ વર્ષના બાળકો માટે</p>
+        
+        <div id="games-menu" class="games-grid">
+            <div class="game-card" onclick="startMathGame('add')">
+                <i class="fa-solid fa-plus"></i>
+                <h3>સરવાળો (Addition)</h3>
+            </div>
+            <div class="game-card" onclick="startMathGame('sub')">
+                <i class="fa-solid fa-minus"></i>
+                <h3>બાદબાકી (Subtraction)</h3>
+            </div>
+            <div class="game-card" onclick="startMathGame('mul')">
+                <i class="fa-solid fa-xmark"></i>
+                <h3>ગુણાકાર (Multiplication)</h3>
+            </div>
+            <div class="game-card" onclick="startMathGame('div')">
+                <i class="fa-solid fa-divide"></i>
+                <h3>ભાગાકાર (Division)</h3>
             </div>
         </div>
 
-        <!-- QUIZ SCREEN -->
-        <div id="quiz-screen" class="screen-card">
-            <div class="quiz-top-bar">
-                <button class="btn btn-outline" style="border-color:var(--border-color); color:var(--text-dark); padding: 8px 15px;" onclick="goHome()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    હોમ
+        <!-- Math Quiz UI -->
+        <div id="math-quiz-area">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+                <button class="btn btn-outline" style="border-color: var(--border-color); color: var(--text-dark); padding: 5px 15px;" onclick="closeMathGame()">
+                    <i class="fa-solid fa-arrow-left"></i> પાછા ફરો
                 </button>
-                <div class="score-live">સ્કોર: <span id="live-score">0</span></div>
+                <div style="font-weight: bold; font-size: 18px; color: var(--primary-color);">પ્રશ્ન <span id="m-q-num">૧</span> / ૧૦</div>
+            </div>
+
+            <div class="math-score-board">સ્કોર: <span id="m-score">૦</span> / ૧૦</div>
+            
+            <div id="m-question" class="math-q-text">૨૫ + ૩૫ = ?</div>
+            
+            <div id="m-options" class="math-options"></div>
+
+            <div id="m-reason" class="reason-box"></div>
+
+            <div style="text-align: right;">
+                <button id="m-next-btn" class="btn btn-blue" style="display: none;" onclick="nextMathQuestion()">આગળ વધો <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <!-- Math Result -->
+        <div id="math-result-area" style="display: none; background: var(--bg-white); padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 600px; margin: 0 auto;">
+            <i class="fa-solid fa-trophy" style="font-size: 60px; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <h2 style="font-size: 32px; margin-bottom: 10px;">રમત પૂર્ણ!</h2>
+            <div style="font-size: 24px; font-weight: bold; color: var(--secondary-color); margin-bottom: 20px;">તમારો સ્કોર: <span id="m-final-score">૦</span> / ૧૦</div>
+            <button class="btn btn-yellow" onclick="closeMathGame()">અન્ય ગેમ્સ રમો</button>
+        </div>
+    </div>
+
+    <!-- 7. PSYCHOLOGY QUIZ SCREEN (Hidden inside code, activated via Test buttons) -->
+    <div id="screen-psych-quiz" class="screen-section">
+        <div id="psych-quiz-area">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+                <button class="btn btn-outline" style="border-color: var(--border-color); color: var(--text-dark); padding: 5px 15px;" onclick="showScreen('test')">
+                    <i class="fa-solid fa-arrow-left"></i> પાછા ફરો
+                </button>
+                <div style="font-weight: bold; font-size: 18px; color: var(--secondary-color);">સ્કોર: <span id="p-live-score">0</span></div>
             </div>
             
             <div style="margin-bottom: 25px;">
-                <div class="q-count">પ્રશ્ન <span id="current-q-num">1</span> / <span id="total-q-count">10</span></div>
+                <div style="color: var(--primary-color); font-weight: 700; font-size: 18px;">પ્રશ્ન <span id="p-q-num">1</span> / <span id="p-total-q">10</span></div>
             </div>
             
-            <div id="question-text" class="question-text">Loading...</div>
-            <div id="options-area"></div>
+            <div id="p-question" style="font-size: 22px; font-weight: 700; margin-bottom: 30px; line-height: 1.5; color: var(--text-dark);">Loading...</div>
+            <div id="p-options"></div>
             
-            <div class="nav-buttons">
-                <button id="prev-btn" class="nav-btn" onclick="prevQuestion()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    પાછળ
-                </button>
-                <button id="next-btn" class="nav-btn" onclick="nextQuestion()">
-                    આગળ 
-                    <svg class="svg-icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
+            <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <button id="p-prev-btn" class="btn" style="background: #95a5a6; color: white; display: none;" onclick="prevPsychQuestion()"><i class="fa-solid fa-arrow-left"></i> પાછળ</button>
+                <button id="p-next-btn" class="btn btn-blue" style="display: none; margin-left: auto;" onclick="nextPsychQuestion()">આગળ <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </div>
 
-        <!-- RESULT SCREEN -->
-        <div id="result-screen" class="screen-card" style="text-align: center;">
-            <div class="result-icon">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-            </div>
-            <div style="color: var(--text-muted); margin-bottom: 5px; font-size: 18px;">તમારું પરિણામ</div>
-            <div id="final-score" class="result-score">0/10</div>
-            
-            <div id="feedback-msg" class="feedback-text"></div>
-            
-            <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-                <button class="btn btn-yellow" onclick="startQuiz('all')">ફરીથી ટેસ્ટ આપો</button>
-                <button class="btn btn-outline" style="border-color:var(--border-color); color:var(--text-dark);" onclick="goHome()">હોમ પેજ પર પાછા ફરો</button>
-            </div>
+        <div id="psych-result-area" style="display: none; background: var(--bg-white); padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 600px; margin: 0 auto;">
+            <i class="fa-solid fa-graduation-cap" style="font-size: 60px; color: var(--primary-color); margin-bottom: 20px;"></i>
+            <div style="color: var(--text-muted); font-size: 18px; margin-bottom: 5px;">તમારું પરિણામ</div>
+            <div id="p-final-score" style="font-size: 45px; font-weight: 800; color: var(--secondary-color); margin-bottom: 10px; font-family: 'Montserrat', sans-serif;">0/10</div>
+            <div id="p-feedback" style="font-size: 20px; font-weight: 700; margin-bottom: 30px; padding: 20px; border-radius: 8px;"></div>
+            <button class="btn btn-yellow" onclick="showScreen('test')">ટેસ્ટ પેજ પર પાછા ફરો</button>
         </div>
-
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 મનોવિજ્ઞાન શૈક્ષણિક પોર્ટલ. સર્વાધિકાર સુરક્ષિત.</p>
-        <div class="visitor-counter">
-            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            કુલ મુલાકાતીઓ: 
-            <img src="https://profile-counter.glitch.me/psychology128/count.svg" alt="Visitor Counter">
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Col 1: Details -->
+            <div class="footer-col">
+                <div class="logo" style="color: #fff; margin-bottom: 20px;">
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--primary-color);"></i> જ્ઞાનશિક્ષા
+                </div>
+                <div class="footer-contact">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p>અમદાવાદ, ગુજરાત, ભારત</p>
+                </div>
+                <div class="footer-contact">
+                    <i class="fa-solid fa-envelope"></i>
+                    <p>janijani431@yahoo.com</p>
+                </div>
+            </div>
+
+            <!-- Col 2: Useful Links -->
+            <div class="footer-col">
+                <h3>ઉપયોગી લિંક્સ (User Links)</h3>
+                <ul class="footer-links">
+                    <li><a onclick="showScreen('home')"><i class="fa-solid fa-angle-right"></i> હોમ (Home)</a></li>
+                    <li><a onclick="showScreen('about')"><i class="fa-solid fa-angle-right"></i> અમારા વિશે (About Us)</a></li>
+                    <li><a onclick="showScreen('blog')"><i class="fa-solid fa-angle-right"></i> બ્લોગ (Blog)</a></li>
+                    <li><a onclick="showScreen('test')"><i class="fa-solid fa-angle-right"></i> ટેસ્ટ (Test)</a></li>
+                    <li><a onclick="showScreen('games')"><i class="fa-solid fa-angle-right"></i> શૈક્ષણિક ગેમ્સ (Games)</a></li>
+                    <li><a onclick="showScreen('contact')"><i class="fa-solid fa-angle-right"></i> સંપર્ક (Contact)</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Suggestion / Contact Form -->
+            <div class="footer-col quick-contact">
+                <h3>સજેશન બોક્સ (Quick Contact)</h3>
+                <form id="suggestionForm" action="https://formspree.io/f/xnjgoeod" method="POST">
+                    <input type="email" name="email" class="form-control" placeholder="તમારું ઈમેલ (Your Email)" required>
+                    <textarea name="message" class="form-control" placeholder="તમારો સંદેશ કે સૂચન... (Message)" required></textarea>
+                    <button type="submit" class="btn-submit" id="submitBtnText">સંદેશ મોકલો <i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div id="form-success-msg">તમારો સંદેશ મોકલાઈ ગયો છે!</div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div>© 2026 જ્ઞાનશિક્ષા શૈક્ષણિક પોર્ટલ. સર્વાધિકાર સુરક્ષિત.</div>
+            <div class="visitor-badge">
+                <i class="fa-regular fa-eye"></i> કુલ મુલાકાતીઓ: 
+                <span id="visitor-counter-container"></span>
+            </div>
         </div>
     </footer>
 
+<!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
-    // પ્રશ્નોનો ડેટાબેઝ
-    const questions = [
-        { chapter: 1, question: "૧. મનોવિજ્ઞાન (સાઈકોલોજી) શબ્દ કઈ ભાષામાંથી ઊતરી આવ્યો છે?", answers: [{ text: "(a) સ્પેનિશ", correct: false }, { text: "(b) લેટિન", correct: false }, { text: "(c) ગ્રીક", correct: true }, { text: "(d) ફ્રેન્ચ", correct: false }] },
-        { chapter: 1, question: "૨. ભારતમાં મનોવિજ્ઞાન ક્ષેત્રમાં સૌપ્રથમ પ્રયોગશાળા ક્યારે સ્થાપવામાં આવી?", answers: [{ text: "(a) 1932", correct: false }, { text: "(b) 1945", correct: false }, { text: "(c) 1906", correct: false }, { text: "(d) 1905", correct: true }] },
-        { chapter: 1, question: "૩. મનોવિજ્ઞાન કયા વિષયમાંથી ઉદ્ભવેલ છે?", answers: [{ text: "(a) તર્કશાસ્ત્ર", correct: false }, { text: "(b) આંકડાશાસ્ત્ર", correct: false }, { text: "(c) તત્ત્વજ્ઞાન", correct: true }, { text: "(d) પ્રાણીશાસ્ત્ર", correct: false }] },
-        { chapter: 1, question: "૪. મનોવિજ્ઞાન માનવીના વર્તનનો અભ્યાસ શાના સંદર્ભમાં કરે છે?", answers: [{ text: "(a) રસ", correct: false }, { text: "(b) રુચિ", correct: false }, { text: "(c) વાતાવરણ", correct: true }, { text: "(d) મનોવલણ", correct: false }] },
-        { chapter: 2, question: "૫. મનોવિજ્ઞાનને વિજ્ઞાન તરીકેનો દરજ્જો ક્યારથી પ્રાપ્ત થયો?", answers: [{ text: "(a) 1878", correct: false }, { text: "(b) 1879", correct: true }, { text: "(c) 1972", correct: false }, { text: "(d) 1869", correct: false }] },
-        { chapter: 2, question: "૬. મનોવિજ્ઞાનનું વિષયવસ્તુ શું છે?", answers: [{ text: "(a) માનવી", correct: false }, { text: "(b) પ્રાણી", correct: false }, { text: "(c) વાતાવરણ", correct: false }, { text: "(d) વર્તન", correct: true }] },
-        { chapter: 2, question: "૭. અચેતન મનનો સિદ્ધાંત કોણે આપ્યો છે?", answers: [{ text: "(a) વર્ધીમર", correct: false }, { text: "(b) વુન્ટ", correct: false }, { text: "(c) ફ્રોઈડ", correct: true }, { text: "(d) જ્હોન ડ્યુઈ", correct: false }] },
-        { chapter: 2, question: "૮. મનોવિજ્ઞાનને પ્રયોગાત્મક સ્વરૂપ આપવાનો યશ કોને ફાળે જાય છે?", answers: [{ text: "(a) યુંગ", correct: false }, { text: "(b) કોહલર", correct: false }, { text: "(c) ફ્રોઈડ", correct: false }, { text: "(d) વુન્ટ", correct: true }] },
-        { chapter: 2, question: "૯. રચનાવાદીઓએ કઈ પદ્ધતિનો ઉપયોગ કર્યો?", answers: [{ text: "(a) બાહ્ય નિરીક્ષણ", correct: false }, { text: "(b) આંતર નિરીક્ષણ", correct: true }, { text: "(c) મુક્ત સાહચર્ય", correct: false }, { text: "(d) સ્વપ્ન વિશ્લેષણ", correct: false }] },
-        { chapter: 2, question: "૧૦. વર્તનવાદના પ્રણેતા કોણ હતા?", answers: [{ text: "(a) વોટ્સન", correct: true }, { text: "(b) કોહલર", correct: false }, { text: "(c) વર્ધીમર", correct: false }, { text: "(d) સી.ટી.મોર્ગન", correct: false }] }
+    // --- 0. Visitor Counter (Admin Exclude Logic) ---
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true') {
+        localStorage.setItem('isAdmin', 'true');
+        alert('એડમિન મોડ ચાલુ છે! હવે તમારી મુલાકાત વેબસાઈટના કાઉન્ટરમાં ગણાશે નહીં.');
+        // Remove ?admin=true from URL cleanly
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    const counterContainer = document.getElementById('visitor-counter-container');
+    if (localStorage.getItem('isAdmin') !== 'true') {
+        // જો યુઝર એડમિન નથી તો જ કાઉન્ટરની ઇમેજ લોડ થશે
+        counterContainer.innerHTML = '<img src="https://api.visitorbadge.io/api/visitors?path=psychology128.github.io&countColor=%23f39c12" alt="Visitor Counter" style="height: 20px; border-radius: 4px;">';
+    } else {
+        // જો યુઝર એડમિન છે, તો ફક્ત મેસેજ દેખાશે
+        counterContainer.innerHTML = '<span style="color:#f39c12; font-weight:bold;">(તમે એડમિન છો)</span>';
+    }
+
+    // --- 1. Navigation Logic (SPA) ---
+    function showScreen(screenId) {
+        // Hide all screens
+        document.querySelectorAll('.screen-section').forEach(sec => sec.classList.remove('active'));
+        // Update nav links
+        document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+        
+        // Show target screen
+        document.getElementById('screen-' + screenId).classList.add('active');
+        
+        // Activate matching nav link (if exists)
+        const links = document.querySelectorAll('.nav-links li');
+        if(screenId === 'home') links[0].classList.add('active');
+        else if(screenId === 'test') links[1].classList.add('active');
+        else if(screenId === 'blog') links[2].classList.add('active');
+        else if(screenId === 'games') links[3].classList.add('active');
+        else if(screenId === 'about') links[4].classList.add('active');
+        else if(screenId === 'contact') links[5].classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- 2. Psychology Quiz Logic (Existing Data) ---
+    const psychQuestions = [
+        { chapter: 1, q: "૧. મનોવિજ્ઞાન (સાઈકોલોજી) શબ્દ કઈ ભાષામાંથી ઊતરી આવ્યો છે?", opts: ["(a) સ્પેનિશ", "(b) લેટિન", "(c) ગ્રીક", "(d) ફ્રેન્ચ"], ans: 2 },
+        { chapter: 1, q: "૨. ભારતમાં મનોવિજ્ઞાન ક્ષેત્રમાં સૌપ્રથમ પ્રયોગશાળા ક્યારે સ્થાપવામાં આવી?", opts: ["(a) 1932", "(b) 1945", "(c) 1906", "(d) 1905"], ans: 3 },
+        { chapter: 1, q: "૩. મનોવિજ્ઞાન કયા વિષયમાંથી ઉદ્ભવેલ છે?", opts: ["(a) તર્કશાસ્ત્ર", "(b) આંકડાશાસ્ત્ર", "(c) તત્ત્વજ્ઞાન", "(d) પ્રાણીશાસ્ત્ર"], ans: 2 },
+        { chapter: 1, q: "૪. મનોવિજ્ઞાન માનવીના વર્તનનો અભ્યાસ શાના સંદર્ભમાં કરે છે?", opts: ["(a) રસ", "(b) રુચિ", "(c) વાતાવરણ", "(d) મનોવલણ"], ans: 2 },
+        { chapter: 2, q: "૫. મનોવિજ્ઞાનને વિજ્ઞાન તરીકેનો દરજ્જો ક્યારથી પ્રાપ્ત થયો?", opts: ["(a) 1878", "(b) 1879", "(c) 1972", "(d) 1869"], ans: 1 },
+        { chapter: 2, q: "૬. મનોવિજ્ઞાનનું વિષયવસ્તુ શું છે?", opts: ["(a) માનવી", "(b) પ્રાણી", "(c) વાતાવરણ", "(d) વર્તન"], ans: 3 },
+        { chapter: 2, q: "૭. અચેતન મનનો સિદ્ધાંત કોણે આપ્યો છે?", opts: ["(a) વર્ધીમર", "(b) વુન્ટ", "(c) ફ્રોઈડ", "(d) જ્હોન ડ્યુઈ"], ans: 2 },
+        { chapter: 2, q: "૮. મનોવિજ્ઞાનને પ્રયોગાત્મક સ્વરૂપ આપવાનો યશ કોને ફાળે જાય છે?", opts: ["(a) યુંગ", "(b) કોહલર", "(c) ફ્રોઈડ", "(d) વુન્ટ"], ans: 3 },
+        { chapter: 2, q: "૯. રચનાવાદીઓએ કઈ પદ્ધતિનો ઉપયોગ કર્યો?", opts: ["(a) બાહ્ય નિરીક્ષણ", "(b) આંતર નિરીક્ષણ", "(c) મુક્ત સાહચર્ય", "(d) સ્વપ્ન વિશ્લેષણ"], ans: 1 },
+        { chapter: 2, q: "૧૦. વર્તનવાદના પ્રણેતા કોણ હતા?", opts: ["(a) વોટ્સન", "(b) કોહલર", "(c) વર્ધીમર", "(d) સી.ટી.મોર્ગન"], ans: 0 }
     ];
 
-    const heroSection = document.getElementById("hero-section");
-    const homeContent = document.getElementById("home-content");
-    const quizScreen = document.getElementById("quiz-screen");
-    const resultScreen = document.getElementById("result-screen");
-    
-    const questionElement = document.getElementById("question-text");
-    const optionsArea = document.getElementById("options-area");
-    const nextBtn = document.getElementById("next-btn");
-    const prevBtn = document.getElementById("prev-btn");
-    const qNumElement = document.getElementById("current-q-num");
-    const totalQCountElement = document.getElementById("total-q-count");
-    const liveScoreElement = document.getElementById("live-score");
+    let pCurrentList = [];
+    let pIndex = 0;
+    let pAnswers = {};
 
-    let currentQuestionsList = [];
-    let currentQuestionIndex = 0;
-    let userSelections = {}; 
-
-    // ક્વિઝ શરૂ કરવાનું ફંક્શન
-    function startQuiz(type) {
-        if (type === 1) currentQuestionsList = questions.filter(q => q.chapter === 1);
-        else if (type === 2) currentQuestionsList = questions.filter(q => q.chapter === 2);
-        else currentQuestionsList = questions;
-
-        userSelections = {};
-        currentQuestionIndex = 0;
+    function startPsychQuiz(chapter) {
+        pCurrentList = psychQuestions.filter(q => q.chapter === chapter);
+        pIndex = 0;
+        pAnswers = {};
         
-        // Hide home areas, show quiz area
-        heroSection.style.display = "none";
-        homeContent.style.display = "none";
-        resultScreen.style.display = "none";
+        document.getElementById('psych-quiz-area').style.display = 'block';
+        document.getElementById('psych-result-area').style.display = 'none';
+        document.getElementById('p-total-q').innerText = pCurrentList.length;
         
-        quizScreen.style.display = "block";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        totalQCountElement.innerText = currentQuestionsList.length;
-        updateScoreDisplay();
-        showQuestion();
+        showScreen('psych-quiz');
+        renderPsychQuestion();
     }
 
-    function showQuestion() {
-        optionsArea.innerHTML = ''; 
-        qNumElement.innerText = currentQuestionIndex + 1;
-        let currentQuestion = currentQuestionsList[currentQuestionIndex];
-        questionElement.innerText = currentQuestion.question;
+    function renderPsychQuestion() {
+        const qData = pCurrentList[pIndex];
+        document.getElementById('p-q-num').innerText = pIndex + 1;
+        document.getElementById('p-question').innerText = qData.q;
+        
+        const optsArea = document.getElementById('p-options');
+        optsArea.innerHTML = '';
+        
+        let answeredIdx = pAnswers[pIndex];
 
-        let answeredData = userSelections[currentQuestionIndex];
-
-        currentQuestion.answers.forEach((answer, index) => {
-            const button = document.createElement("button");
-            button.innerText = answer.text;
-            button.classList.add("option-btn");
-            if(answer.correct) button.dataset.correct = "true";
-
-            if (answeredData !== undefined) {
-                button.disabled = true;
-                if (answer.correct) {
-                    button.classList.add("correct");
-                }
-                if (answeredData.indexSelected === index && !answer.correct) {
-                    button.classList.add("wrong");
+        qData.opts.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.style.width = "100%"; btn.style.padding = "15px"; btn.style.marginBottom = "10px";
+            btn.style.border = "2px solid var(--border-color)"; btn.style.background = "#fff";
+            btn.style.borderRadius = "8px"; btn.style.textAlign = "left"; btn.style.fontSize = "18px";
+            btn.style.cursor = "pointer"; btn.style.fontWeight = "600";
+            
+            if (answeredIdx !== undefined) {
+                btn.disabled = true;
+                if (idx === qData.ans) {
+                    btn.style.background = "var(--correct-bg)"; btn.style.borderColor = "var(--correct-border)"; btn.style.color = "var(--correct-text)";
+                } else if (idx === answeredIdx && answeredIdx !== qData.ans) {
+                    btn.style.background = "var(--wrong-bg)"; btn.style.borderColor = "var(--wrong-border)"; btn.style.color = "var(--wrong-text)";
                 }
             } else {
-                button.addEventListener("click", (e) => selectAnswer(e, index, answer.correct));
+                btn.onclick = () => selectPsychAnswer(idx);
             }
-            optionsArea.appendChild(button);
+            optsArea.appendChild(btn);
         });
 
-        prevBtn.style.display = currentQuestionIndex > 0 ? "flex" : "none";
+        document.getElementById('p-prev-btn').style.display = pIndex > 0 ? "inline-flex" : "none";
+        document.getElementById('p-next-btn').style.display = answeredIdx !== undefined ? "inline-flex" : "none";
         
-        if (answeredData !== undefined) {
-            nextBtn.style.display = "flex";
-            nextBtn.innerHTML = currentQuestionIndex === currentQuestionsList.length - 1 
-                ? 'પરિણામ જુઓ <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>' 
-                : 'આગળ <svg class="svg-icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+        if (pIndex === pCurrentList.length - 1) {
+            document.getElementById('p-next-btn').innerHTML = 'પરિણામ જુઓ <i class="fa-solid fa-trophy"></i>';
         } else {
-            nextBtn.style.display = "none";
+            document.getElementById('p-next-btn').innerHTML = 'આગળ <i class="fa-solid fa-arrow-right"></i>';
         }
+        updatePsychScore();
     }
 
-    function selectAnswer(e, indexSelected, isCorrect) {
-        userSelections[currentQuestionIndex] = { indexSelected, isCorrect };
-        
-        const selectedBtn = e.target;
-        if(isCorrect) selectedBtn.classList.add("correct");
-        else selectedBtn.classList.add("wrong");
-        
-        Array.from(optionsArea.children).forEach(button => {
-            if(button.dataset.correct === "true") button.classList.add("correct");
-            button.disabled = true;
-        });
-        
-        updateScoreDisplay();
-        
-        nextBtn.style.display = "flex";
-        nextBtn.innerHTML = currentQuestionIndex === currentQuestionsList.length - 1 
-                ? 'પરિણામ જુઓ <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>' 
-                : 'આગળ <svg class="svg-icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    function selectPsychAnswer(idx) {
+        pAnswers[pIndex] = idx;
+        renderPsychQuestion();
     }
 
-    function updateScoreDisplay() {
+    function updatePsychScore() {
         let score = 0;
-        for (let key in userSelections) {
-            if (userSelections[key].isCorrect) score++;
+        for (let i in pAnswers) {
+            if (pAnswers[i] === pCurrentList[i].ans) score++;
         }
-        liveScoreElement.innerText = score;
+        document.getElementById('p-live-score').innerText = score;
         return score;
     }
 
-    function nextQuestion() {
-        if(currentQuestionIndex < currentQuestionsList.length - 1) {
-            currentQuestionIndex++;
-            showQuestion();
+    function nextPsychQuestion() {
+        if (pIndex < pCurrentList.length - 1) {
+            pIndex++;
+            renderPsychQuestion();
         } else {
-            showResult();
+            // Show result
+            document.getElementById('psych-quiz-area').style.display = 'none';
+            document.getElementById('psych-result-area').style.display = 'block';
+            let finalScore = updatePsychScore();
+            document.getElementById('p-final-score').innerText = finalScore + " / " + pCurrentList.length;
+            
+            let percent = (finalScore / pCurrentList.length) * 100;
+            const fb = document.getElementById('p-feedback');
+            fb.style.background = percent >= 80 ? "var(--correct-bg)" : (percent >= 50 ? "#fff3cd" : "var(--wrong-bg)");
+            fb.style.color = percent >= 80 ? "var(--correct-text)" : (percent >= 50 ? "#856404" : "var(--wrong-text)");
+            fb.innerText = percent >= 80 ? "અદ્ભુત તૈયારી! 🌟" : (percent >= 50 ? "સારી પ્રગતિ! 👍" : "વધુ મહેનતની જરૂર છે 💪");
         }
     }
 
-    function prevQuestion() {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
-            showQuestion();
-        }
+    function prevPsychQuestion() {
+        if (pIndex > 0) { pIndex--; renderPsychQuestion(); }
     }
 
-    function showResult() {
-        quizScreen.style.display = "none";
-        resultScreen.style.display = "block";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // --- 3. Educational Math Games Logic ---
+    const gujDigits = ['૦','૧','૨','૩','૪','૫','૬','૭','૮','૯'];
+    function toGuj(num) { return num.toString().split('').map(d => (d>='0'&&d<='9') ? gujDigits[d] : d).join(''); }
+    
+    let mQuestions = [];
+    let mIndex = 0;
+    let mScore = 0;
+    let mAnswered = false;
+
+    function generateMathQuestions(type) {
+        let qs = [];
+        for(let i=0; i<10; i++) {
+            let qStr = "", ans = 0, reason = "", opts = [];
+            if(type === 'add') {
+                let a = Math.floor(Math.random() * 40) + 10; // 10-49
+                let b = Math.floor(Math.random() * 40) + 10;
+                ans = a + b;
+                qStr = `${toGuj(a)} + ${toGuj(b)} = ?`;
+                let aRound = Math.floor(a/10)*10, aRem = a%10, bRound = Math.floor(b/10)*10, bRem = b%10;
+                reason = `કારણ: (${toGuj(aRound)} + ${toGuj(bRound)} = ${toGuj(aRound+bRound)}) અને (${toGuj(aRem)} + ${toGuj(bRem)} = ${toGuj(aRem+bRem)}), તેથી કુલ ${toGuj(ans)} થાય.`;
+            } 
+            else if(type === 'sub') {
+                let a = Math.floor(Math.random() * 50) + 50; // 50-99
+                let b = Math.floor(Math.random() * 30) + 10;
+                ans = a - b;
+                qStr = `${toGuj(a)} - ${toGuj(b)} = ?`;
+                let bRound = Math.floor(b/10)*10, bRem = b%10;
+                reason = `કારણ: પહેલા ${toGuj(a)} માંથી ${toGuj(bRound)} બાદ કરો = ${toGuj(a-bRound)}. પછી તેમાંથી ${toGuj(bRem)} બાદ કરતા ${toGuj(ans)} વધે.`;
+            }
+            else if(type === 'mul') {
+                let a = Math.floor(Math.random() * 10) + 2; // 2-11
+                let b = Math.floor(Math.random() * 9) + 2; // 2-10
+                ans = a * b;
+                qStr = `${toGuj(a)} × ${toGuj(b)} = ?`;
+                reason = `કારણ: ${toGuj(a)} નો ઘડિયો ${toGuj(b)} વાર બોલતા: ${toGuj(a)} × ${toGuj(b)} = ${toGuj(ans)} થાય.`;
+            }
+            else if(type === 'div') {
+                let b = Math.floor(Math.random() * 9) + 2; // divisor 2-10
+                ans = Math.floor(Math.random() * 10) + 2; // answer 2-11
+                let a = b * ans;
+                qStr = `${toGuj(a)} ÷ ${toGuj(b)} = ?`;
+                reason = `કારણ: ${toGuj(b)} ના ઘડિયામાં ${toGuj(ans)} વખત આવતો અંક ${toGuj(a)} છે (${toGuj(b)} × ${toGuj(ans)} = ${toGuj(a)}).`;
+            }
+
+            // Generate 3 fake options
+            opts.push(ans);
+            while(opts.length < 4) {
+                let fake = ans + (Math.floor(Math.random() * 10) - 5);
+                if(fake !== ans && fake > 0 && !opts.includes(fake)) opts.push(fake);
+            }
+            opts.sort(() => Math.random() - 0.5); // shuffle
+            
+            qs.push({ q: qStr, ans: ans, opts: opts, reason: reason });
+        }
+        return qs;
+    }
+
+    function startMathGame(type) {
+        mQuestions = generateMathQuestions(type);
+        mIndex = 0;
+        mScore = 0;
+        document.getElementById('games-menu').style.display = 'none';
+        document.getElementById('math-quiz-area').style.display = 'block';
+        document.getElementById('math-result-area').style.display = 'none';
+        renderMathQuestion();
+    }
+
+    function closeMathGame() {
+        document.getElementById('games-menu').style.display = 'grid';
+        document.getElementById('math-quiz-area').style.display = 'none';
+        document.getElementById('math-result-area').style.display = 'none';
+    }
+
+    function renderMathQuestion() {
+        mAnswered = false;
+        const qData = mQuestions[mIndex];
+        document.getElementById('m-q-num').innerText = toGuj(mIndex + 1);
+        document.getElementById('m-score').innerText = toGuj(mScore);
+        document.getElementById('m-question').innerText = qData.q;
         
-        let score = updateScoreDisplay();
-        document.getElementById("final-score").innerText = `${score} / ${currentQuestionsList.length}`;
+        const optsArea = document.getElementById('m-options');
+        optsArea.innerHTML = '';
         
-        let percentage = (score / currentQuestionsList.length) * 100;
-        const feedbackMsg = document.getElementById("feedback-msg");
+        qData.opts.forEach(optVal => {
+            const btn = document.createElement('button');
+            btn.className = 'math-opt-btn';
+            btn.innerText = toGuj(optVal);
+            btn.onclick = (e) => selectMathAnswer(e, optVal, qData.ans);
+            optsArea.appendChild(btn);
+        });
+
+        document.getElementById('m-reason').style.display = 'none';
+        document.getElementById('m-reason').innerText = qData.reason;
+        document.getElementById('m-next-btn').style.display = 'none';
+    }
+
+    function selectMathAnswer(e, selected, correct) {
+        if(mAnswered) return;
+        mAnswered = true;
         
-        feedbackMsg.className = "feedback-text"; 
-        if (percentage >= 80) {
-            feedbackMsg.innerHTML = "અદ્ભુત! તમારી તૈયારી ઉત્તમ છે 🌟";
-            feedbackMsg.classList.add("feedback-good");
-        } else if (percentage >= 50) {
-            feedbackMsg.innerHTML = "સારી પ્રગતિ! હજુ થોડી મહેનત કરો 👍";
-            feedbackMsg.classList.add("feedback-avg");
+        if(selected === correct) {
+            e.target.classList.add('correct');
+            mScore++;
+            document.getElementById('m-score').innerText = toGuj(mScore);
         } else {
-            feedbackMsg.innerHTML = "ચિંતા ન કરો, ફરીથી પુનરાવર્તન કરો 💪";
-            feedbackMsg.classList.add("feedback-bad");
+            e.target.classList.add('wrong');
+            // Find correct and highlight
+            Array.from(document.getElementById('m-options').children).forEach(btn => {
+                if(btn.innerText === toGuj(correct)) btn.classList.add('correct');
+            });
+        }
+
+        document.getElementById('m-reason').style.display = 'block';
+        document.getElementById('m-next-btn').style.display = 'inline-flex';
+        
+        if (mIndex === 9) document.getElementById('m-next-btn').innerText = 'પરિણામ જુઓ';
+        else document.getElementById('m-next-btn').innerHTML = 'આગળ વધો <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    function nextMathQuestion() {
+        if(mIndex < 9) {
+            mIndex++;
+            renderMathQuestion();
+        } else {
+            document.getElementById('math-quiz-area').style.display = 'none';
+            document.getElementById('math-result-area').style.display = 'block';
+            document.getElementById('m-final-score').innerText = toGuj(mScore);
         }
     }
 
-    // હોમ પેજ પર પરત ફરવા
-    function goHome() {
-        quizScreen.style.display = "none";
-        resultScreen.style.display = "none";
-        heroSection.style.display = "flex";
-        homeContent.style.display = "block";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // --- Suggestion Form Submission Logic ---
+    // --- 4. Formspree Submission Logic ---
     const suggestionForm = document.getElementById("suggestionForm");
     const successMsg = document.getElementById("form-success-msg");
     const submitBtn = document.getElementById("submitBtnText");
@@ -594,34 +785,32 @@
         event.preventDefault();
         const actionUrl = suggestionForm.getAttribute("action");
 
-        submitBtn.innerHTML = "મોકલાઈ રહ્યું છે...";
+        submitBtn.innerHTML = 'મોકલાઈ રહ્યું છે...';
         submitBtn.disabled = true;
 
         const formData = new FormData(suggestionForm);
 
         fetch(actionUrl, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
+            method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
         }).then(response => {
             if (response.ok) {
                 successMsg.style.display = "block";
                 suggestionForm.reset();
-                submitBtn.innerHTML = '<svg class="svg-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> સંદેશ મોકલો';
+                submitBtn.innerHTML = 'સંદેશ મોકલો <i class="fa-solid fa-paper-plane"></i>';
                 submitBtn.disabled = false;
-                
                 setTimeout(() => { successMsg.style.display = "none"; }, 5000);
             } else {
-                alert("માફ કરશો, સંદેશ મોકલવામાં કોઈ ભૂલ આવી છે. ફરી પ્રયાસ કરો.");
-                submitBtn.innerHTML = '<svg class="svg-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> સંદેશ મોકલો';
+                alert("માફ કરશો, કોઈ ભૂલ આવી છે.");
                 submitBtn.disabled = false;
+                submitBtn.innerHTML = 'સંદેશ મોકલો <i class="fa-solid fa-paper-plane"></i>';
             }
         }).catch(error => {
-            alert("ઇન્ટરનેટ કનેક્શનમાં ભૂલ છે અથવા લિંક ખોટી છે.");
-            submitBtn.innerHTML = '<svg class="svg-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> સંદેશ મોકલો';
+            alert("ઇન્ટરનેટ કનેક્શનમાં ભૂલ છે.");
             submitBtn.disabled = false;
+            submitBtn.innerHTML = 'સંદેશ મોકલો <i class="fa-solid fa-paper-plane"></i>';
         });
     });
+
 </script>
 
 </body>
